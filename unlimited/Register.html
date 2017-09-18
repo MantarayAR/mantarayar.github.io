@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantaray AR - Augmented Reality for the Classroom</title>
+
+<base
+	href="" />
+
+<meta name="description"
+	content="Mantaray AR provides Augmented Reality software for educational purposes.  It is free to demo and use for individuals.">
+<meta name="author"
+	content="Ivan Montiel, Benton Redmann, Benjamin Boren, David Magill, Daniela Howe">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<!-- <link rel="stylesheet/less" type="text/css" href="less/bootstrap.less" /> -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<link href="css/carousel.css" rel="stylesheet">
+<link href="css/landing-page.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700'
+	rel='stylesheet' type='text/css'>
+
+<link rel="shortcut icon" type="image/png" href="favicon.ico" />
+<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+	<div id="fb-root"></div>
+	
+	<script>
+		var appId = '421545981312470';
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId : appId,
+				status : true,
+				cookie : true,
+				xfbml : true
+			});
+			FB.Event.subscribe('auth.authResponseChange', function(response) {
+				if (response.status === 'connected') {
+					// Redirect to user page, since the user has logged in
+					testAPI(response);
+				} else {
+					FB.login();
+				}
+			});
+		};
+	</script>
+	
+	<script>
+		// Load the SDK asynchronously
+		(function(d) {
+			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement('script');
+			js.id = id;
+			js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			ref.parentNode.insertBefore(js, ref);
+		}(document));
+
+		// Here we run a very simple test of the Graph API after login is successful. 
+		// This testAPI() function is only called in those cases. 
+		function testAPI(response) {
+			$('#loggedin-iframe').get(0).onload = function() {
+				$('#loggedin').fadeIn();
+			};
+			$('#loggedin-iframe').get(0).src = "./Login/Facebook?iframe=true&accessToken="
+					+ response.authResponse.accessToken;
+
+		}
+
+		var fblogin = function() {
+			// If Chrome iOS
+			if (navigator.userAgent.match('CriOS')) {
+				window.location.href = "https://www.facebook.com/dialog/oauth?client_id=" + appId
+						+ "&response_type=token&scope=email&redirect_uri=http://" + document.domain;
+				return;
+			}
+
+			FB.login(function(response) {
+				if (response) {
+					if (response.authResponse) {
+						//successful auth
+						//do things like create account, redirect etc.
+						window.location.href = "./Login/Facebook?accessToken=" + response.authResponse.accessToken;
+					} else {
+						//unsuccessful auth
+						//do things like notify user etc.
+					}
+				}
+			}, {
+				scope : 'email'
+			});
+		};
+
+		if (window.location.hash.split('=').length > 1 && window.location.hash.split('=')[0] == "#access_token") {
+			window.location.href = "./Login/Facebook?accessToken=" + window.location.hash.split('=')[1];
+		}
+	</script>
+
+	<div id="loggedin">
+		<h3>
+			Welcome back. You've been logged in, <a href="index.html">click here</a> to
+			refresh the page.
+		</h3>
+	</div>
+	<iframe id="loggedin-iframe" src="index.html" style="display: none"></iframe>
+
+
+	<div class="navbar navbar-default navbar-static-top borderless"
+		role="navigation">
+		<div class="container header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<div class="navbar-header ">
+
+				<a href="index.html" class="logo navbar-brand header-logo"><img
+					src="css/img/mantarayar_white_icon.png" /> Unlimited</a>
+			</div>
+			
+
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html#about-us">ABOUT</a></li>
+					<li><a href="index.html#for-teaching">TEACH</a></li>
+					<li><a href="index.html#for-learning">LEARN</a></li>
+					<li class="active"><a href="Register.html">REGISTER</a></li>
+					<li><a href="Login.html" class="user-info">LOGIN</a></li>
+				</ul>
+				<div class="nav navbar-nav navbar-right">
+					<a class="btn btn-default btn-sm" href="http://www.mantarayar.com">Mantaray
+						AR Portal <b class="glyphicon glyphicon-arrow-right"></b>
+					</a>
+				</div>
+
+				
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+
+		</div>
+
+<div class="push"></div>
+
+
+
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="jumbotron-normal">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Login</h3>
+					</div>
+					<div class="panel-body">
+						<form class="form" method="post" action="Login.html">
+
+							<div class="form-group">
+								<label for="inputEmail">Email address</label> <input
+									type="email" class="form-control" id="inputEmail"
+									placeholder="Enter your email" name="emailAddress" value="">
+							</div>
+							<div class="form-group">
+								<label for="inputPassword">Password</label> <input
+									type="password" class="form-control" id="inputPassword"
+									placeholder="Password" name="password">
+							</div>
+							<span class="right-float">Or <a class="fb-button-sm"
+								onClick="fblogin();"><b></b>&nbsp;Login With Facebook</a></span>
+
+							<button type="submit" class="btn btn-success">Sign In</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="jumbotron-normal">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Register</h3>
+					</div>
+					<div class="panel-body">
+						<form class="form" method="post" action="Register.html">
+
+							<div class="form-group">
+								<label for="inputEmail">Email address</label> <input
+									type="email" class="form-control" id="inputEmail"
+									placeholder="Enter your email" name="emailAddress" value="">
+							</div>
+							<div class="form-group">
+								<label for="inputPassword">Password</label> <input
+									type="password" class="form-control" id="inputPassword"
+									placeholder="Password" name="password">
+							</div>
+							<div class="form-group">
+								<label for="inputVerifyPassword">Verify Password</label> <input
+									type="password" class="form-control" id="inputVerifyPassword"
+									placeholder="Verify your password" name="verifyPassword">
+							</div>
+							<button type="submit" class="btn btn-success">Create
+								Your Account</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="footer">
+	<p class="pull-right">
+		<a href="index.html#" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+	</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2">
+				<p style="font-size: 14px; text-align: center">
+					Use of this site constitutes acceptance of our <a
+						href="http://www.mantarayar.com/TermsAndPrivacy#terms">User
+						Agreement</a> and <a
+						href="http://www.mantarayar.com/TermsAndPrivacy#privacy">Privacy
+						Policy</a>. &copy; 2013 Mantaray AR LLC. All rights reserved.
+				</p>
+				<p>
+					<b>Citing this resource:</b>
+					<p>Montiel, Ivan, Benjamin Boren, Benton Redmann, Daniela Howe, and Quincy Conley. "Mantaray AR - Augmented Reality for the Classroom." <i></i>. N.p., 1 May 2014. Web. 8 June 2014. &lt;http://unlimited.mantarayar.com/&gt;.</p>
+				</p>
+				<div class="links">
+					<div class="floater-set">
+						<ul>
+							<li>Company</li>
+							<li><a href="https://angel.co/mantaray-ar-llc">Investors</a></li>
+						</ul>
+					</div>
+					<div class="floater-set">
+						<ul>
+							<li>Resources</li>
+							<li><a href="http://mantarayar.wordpress.com/news-media/">Media
+									Kit</a></li>
+						</ul>
+					</div>
+					<div class="floater-set">
+						<ul>
+							<li>Social</li>
+							<li><i class="fa fa-youtube fa-fw"></i> <a
+								href="https://www.youtube.com/channel/UCXCSyTBnkxMJMzFHtvZxZwA">YouTube</a></li>
+							<li><i class="fa fa-twitter fa-fw"></i> <a
+								href="https://twitter.com/MantarayAR">Twitter</a></li>
+							<li><i class="fa fa-facebook fa-fw"></i> <a
+								href="https://www.facebook.com/mantarayar">Facebook</a></li>
+							<li><i class="fa fa-wordpress fa-fw"></i> <a
+								href="http://mantarayar.wordpress.com/">Wordpress</a></li>
+							<li><i class="fa fa-google-plus fa-fw"></i> <a
+								href="https://plus.google.com/106834306985891263639/posts">Google+</a></li>
+
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Javascript -->
+<script src="js/vendor/jquery-1.10.1.min.js"></script>
+<script src="js/vendor/jquery-ui.js"></script>
+<script>
+	/**
+	 * jQUery scroll view
+	 */
+	function scrolly(hash) {
+		$(hash).scrollView(function() {
+			window.location.hash = hash;
+		});
+
+		return false;
+	}
+
+	$(document).ready(function() {
+
+		$.fn.scrollView = function(callback) {
+			return this.each(function() {
+				$('html, body').animate({
+					scrollTop : $(this).offset().top
+				}, 100, callback);
+			});
+		};
+		/**
+		 * Dynamic Height
+		 */
+		$('.dynamic-height').parent().each(function() {
+			var height = ($(window).height() - 110);
+			$(this).css({
+				'display' : 'table',
+				'height' : height + "px"
+			});
+
+			$(this).children().css({
+				'display' : 'table-cell',
+				'height' : '100%',
+				'vertical-align' : 'middle'
+			});
+		});
+
+	}); // document ready
+</script>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/bootstrap.file-input.js"></script>
+<!-- <script src="./js/vendor/less.js"></script> -->
+<script src="js/vendor/holder.js"></script>
+
+<script>
+	var head = document.getElementsByTagName('head')[0], style = document.createElement('style');
+	style.type = 'text/css';
+	if (style.styleSheet)
+		style.styleSheet.cssText = ':before,:after{content:none !important';
+	else
+		style.innerHTML = ':before,:after{content:none !important';
+	head.appendChild(style);
+	setTimeout(function() {
+		head.removeChild(style);
+	}, 0);
+
+	$(function() {
+		$('input[type=file]').bootstrapFileInput();
+	});
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-51114636-1', 'mantarayar.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</body>
+</html>
